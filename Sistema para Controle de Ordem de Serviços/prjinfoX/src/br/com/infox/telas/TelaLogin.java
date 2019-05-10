@@ -7,6 +7,8 @@ package br.com.infox.telas;
 
 import java.sql.*;
 import br.com.infox.dal.ModuloConexao;
+import java.awt.Color;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,18 +30,35 @@ public class TelaLogin extends javax.swing.JFrame {
             pst.setString(2, txtSenha.getText());
             // Metodo de acesso ao banco
             rs = pst.executeQuery();
-            
+
             // Metodo de confirmação de dados
             if (rs.next()) {
-                TelaPrincipal principal = new TelaPrincipal();
-                principal.setVisible(true);
+                // Metodo para acessar campo perfil db
+                String perfil = rs.getString(6);
+                //System.out.println(perfil);
                 
-                this.dispose();
-                    conexao.close();
+                // Estrutura de decisao e tratamento de perfil db
+                if (perfil.equals("admin")) {
+
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    
+                    TelaPrincipal.MenRel.setEnabled(true);
+                    TelaPrincipal.MenCadUsu.setEnabled(true);
+                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                    TelaPrincipal.lblUsuario.setForeground(Color.red);
+                    this.dispose();
+                } else{
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                    this.dispose();
+                }
+                //conexao.close();
             } else {
                 JOptionPane.showMessageDialog(null, "usuário e/ou senha inválido(s)");
             }
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
