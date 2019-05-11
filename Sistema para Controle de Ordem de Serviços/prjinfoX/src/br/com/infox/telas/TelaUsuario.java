@@ -135,6 +135,30 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         }
     }
 
+    // Metodo Remover
+    private void remover() {
+        int confirmar = JOptionPane.showConfirmDialog(null, "Desejar Remover o Usuário?", "Atenção!!!", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            String sql = "delete from tbusuarios where iduser=?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtUsuId.getText());
+                int apagado = pst.executeUpdate();
+                if (apagado > 0) {
+                    JOptionPane.showMessageDialog(null, "Usuário Removido com Sucesso!!!");
+                    txtUsuId.setText(null);
+                    txtUsuNome.setText(null);
+                    txtUsuFone.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -393,6 +417,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void btnUsuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuDeleteActionPerformed
         // TODO add your handling code here:
+// Chamamento do metodo Remover
+        remover();
     }//GEN-LAST:event_btnUsuDeleteActionPerformed
 
 
