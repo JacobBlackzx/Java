@@ -135,7 +135,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         }
     }
 
-    // Metodo Remover
+// Metodo Remover
     private void remover() {
         int confirmar = JOptionPane.showConfirmDialog(null, "Desejar Remover o Usuário?", "Atenção!!!", JOptionPane.YES_NO_OPTION);
         if (confirmar == JOptionPane.YES_OPTION) {
