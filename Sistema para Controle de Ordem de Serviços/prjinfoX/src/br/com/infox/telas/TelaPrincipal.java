@@ -79,6 +79,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         MenCadOS.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
         MenCadOS.setText("OS");
+        MenCadOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenCadOSActionPerformed(evt);
+            }
+        });
         MenCad.add(MenCadOS);
 
         MenCadUsu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
@@ -136,7 +141,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -210,6 +214,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cliente.setVisible(true);
         Desktop.add(cliente);
     }//GEN-LAST:event_MenCadCliActionPerformed
+
+    private void MenCadOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadOSActionPerformed
+        // TODO add your handling code here:
+// Módulo de chamamento TelaOS
+    TelaOS os=new TelaOS();
+    os.setVisible(true);
+    Desktop.add(os);
+    }//GEN-LAST:event_MenCadOSActionPerformed
 
     /**
      * @param args the command line arguments
