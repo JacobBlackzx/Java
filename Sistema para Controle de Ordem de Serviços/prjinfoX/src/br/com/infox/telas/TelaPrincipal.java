@@ -22,6 +22,7 @@ import net.sf.jasperreports.view.JasperViewer;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     Connection conexao = null;
+
     /**
      * Creates new form TelaPrincipal
      */
@@ -121,6 +122,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         MenRelSer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         MenRelSer.setText("Serviços");
+        MenRelSer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenRelSerActionPerformed(evt);
+            }
+        });
         MenRel.add(MenRelSer);
 
         Menu.add(MenRel);
@@ -194,32 +200,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void MenAjuSobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenAjuSobActionPerformed
         // TODO add your handling code here:
-       // Chamamento da Tela de Ajuda
-       TelaSobre sobre = new TelaSobre();
-       sobre.setVisible(true);
+        // Chamamento da Tela de Ajuda
+        TelaSobre sobre = new TelaSobre();
+        sobre.setVisible(true);
     }//GEN-LAST:event_MenAjuSobActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-       // Sincroniza a data do software pela data do Sistema Operacional
+        // Sincroniza a data do software pela data do Sistema Operacional
         Date data = new Date();
         DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
         lblData.setText(formatador.format(data));
-        
+
     }//GEN-LAST:event_formWindowActivated
 
     private void MenOpcSaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenOpcSaiActionPerformed
         // TODO add your handling code here:
         // Exibir Caixa de Dialogo
-        int sair = JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja sair?","Atenção",JOptionPane.YES_NO_OPTION);
+        int sair = JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja sair?", "Atenção", JOptionPane.YES_NO_OPTION);
         if (sair == JOptionPane.YES_OPTION) {
-                System.exit(0);
+            System.exit(0);
         }
     }//GEN-LAST:event_MenOpcSaiActionPerformed
 
     private void MenCadUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadUsuActionPerformed
         // TODO add your handling code here:
-    // Modulo de conexao TelaUsuario ao Desktop
+        // Modulo de conexao TelaUsuario ao Desktop
         TelaUsuario usuario = new TelaUsuario();
         usuario.setVisible(true);
         Desktop.add(usuario);
@@ -236,26 +242,41 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void MenCadOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadOSActionPerformed
         // TODO add your handling code here:
 // Módulo de chamamento TelaOS
-    TelaOS os=new TelaOS();
-    os.setVisible(true);
-    Desktop.add(os);
+        TelaOS os = new TelaOS();
+        os.setVisible(true);
+        Desktop.add(os);
     }//GEN-LAST:event_MenCadOSActionPerformed
 
     private void menRelCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRelCliActionPerformed
         // TODO add your handling code here:
-        // Modulo de Geração de Relatórios
-        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão deste relatório?","Atenção",JOptionPane.YES_NO_OPTION);
+        // Modulo de Geração de Relatórios de Clientes
+        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão deste relatório?", "Atenção", JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_NO_OPTION) {
             // Imprimindo Relatório via iReport
             try {
-                JasperPrint print = JasperFillManager.fillReport("/home/vicktorzx/NetBeansProjects/reports/clientes.jasper",null,conexao);
+                JasperPrint print = JasperFillManager.fillReport("/home/vicktorzx/NetBeansProjects/reports/clientes.jasper", null, conexao);
                 // Modúlo de Exibição de Relatórios do iReport Class
-                JasperViewer.viewReport(print,false);
+                JasperViewer.viewReport(print, false);
             } catch (JRException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
     }//GEN-LAST:event_menRelCliActionPerformed
+
+    private void MenRelSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenRelSerActionPerformed
+        // Modulo de Geração de Relatórios de Serviços
+        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão deste relatório?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_NO_OPTION) {
+            // Emissão de Relatório via iReport
+            try {
+                JasperPrint print = JasperFillManager.fillReport("/home/vicktorzx/NetBeansProjects/reports/servico.jasper", null, conexao);
+                // Modúlo de Exibição de Relatórios do iReport Class
+                JasperViewer.viewReport(print, false);
+            } catch (JRException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_MenRelSerActionPerformed
 
     /**
      * @param args the command line arguments
