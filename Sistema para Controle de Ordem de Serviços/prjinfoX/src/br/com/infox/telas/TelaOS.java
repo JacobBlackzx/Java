@@ -8,8 +8,13 @@ package br.com.infox.telas;
 import java.sql.*;
 import br.com.infox.dal.ModuloConexao;
 import java.awt.HeadlessException;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -199,6 +204,24 @@ public class TelaOS extends javax.swing.JInternalFrame {
                     tblClientes.setEnabled(true);
                 }
             } catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+    
+    private void imprimir_os() {
+        // Modulo de Impressão OS
+        int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão desta OS?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_NO_OPTION) {
+            // Imprimindo Relatório via iReport
+            try {
+                // Class HashMap para filtragem de dados
+                HashMap filtro = new HashMap();
+                filtro.put("os",Integer.parseInt(txtOS.getText()));
+                JasperPrint print = JasperFillManager.fillReport("/home/vicktorzx/NetBeansProjects/reports/os.jasper", filtro, conexao);
+                // Modúlo de Exibição de Relatórios do iReport Class
+                JasperViewer.viewReport(print, false);
+            } catch (JRException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
@@ -472,6 +495,11 @@ public class TelaOS extends javax.swing.JInternalFrame {
         btnOSImprimir.setToolTipText("Imprimir OS");
         btnOSImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOSImprimir.setPreferredSize(new java.awt.Dimension(80, 80));
+        btnOSImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOSImprimirActionPerformed(evt);
+            }
+        });
 
         btnOsPequisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/read.png"))); // NOI18N
         btnOsPequisar.setToolTipText("Consultar");
@@ -667,6 +695,12 @@ public class TelaOS extends javax.swing.JInternalFrame {
         // Método Alterar OS
         pesquisar_os();
     }//GEN-LAST:event_btnOsPequisarActionPerformed
+
+    private void btnOSImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOSImprimirActionPerformed
+        // TODO add your handling code here:
+        // Método de Impressão OS
+        imprimir_os();
+    }//GEN-LAST:event_btnOSImprimirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
